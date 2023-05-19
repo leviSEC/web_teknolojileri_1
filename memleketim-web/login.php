@@ -1,46 +1,42 @@
 <?php
-session_start();
-require_once 'config.php';
+// Kullanıcı adı ve şifre bilgilerini kontrol etmek için fonksiyon
+function login($username, $password) {
+    // Kullanıcı adı ve şifre alanının boş olup olmadığını kontrol et
+    if (empty($username) || empty($password)) {
+        return false;
+    }
 
+    // Kullanıcı adının mail adresi formatında olup olmadığını kontrol et
+    if (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
+        return false;
+    }
+
+    // Kullanıcı adından öğrenci numarasını çıkar
+    $studentNumber = explode('@', $username)[0];
+
+    // Şifreyi kontrol et
+    if ($studentNumber === $password) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// Form gönderildiğinde işlemleri yap
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Kullanıcı adı ve şifreyi al
+    // Kullanıcı adı ve şifre değişkenlerini al
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    // Kullanıcı adı ve şifrenin boş olup olmadığını kontrol et
-    if (empty($username) || empty($password)) {
-        $_SESSION["error"] = "Kullanıcı adı ve şifre alanları boş bırakılamaz!";
+    // Login işlemini kontrol et
+    if (login($username, $password)) {
+        // Başarılı login mesajını göster
+        echo "Hoşgeldiniz " . htmlspecialchars($username) . "! Login işlemi başarılı.";
+    } else {
+        // Başarısız login durumunda kullanıcıyı login sayfasına yönlendir
         header("Location: login.php");
-        exit;
+        exit();
     }
-
-    // Kullanıcı adının bir e-posta adresi olup olmadığını kontrol et
-    if (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
-        $_SESSION["error"] = "Geçerli bir e-posta adresi girmelisiniz!";
-        header("Location: login.php");
-        exit;
-    }
-
-    // Kullanıcının veritabanında doğruluğunu kontrol et
-    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows == 1) {
-        $row = $result->fetch_assoc();
-        $storedPassword = $row["password"];
-
-        if ($password === $storedPassword) {
-            $_SESSION["success"] = "Hoşgeldiniz: " . $username;
-            header("Location: welcome.php");
-            exit;
-        }
-    }
-
-    $_SESSION["error"] = "Kullanıcı adı veya şifre hatalı!";
-    header("Location: login.php");
-    exit;
 }
 ?>
 
@@ -50,22 +46,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Login Sayfası</title>
 </head>
 <body>
-    <h1>Login Sayfası</h1>
+    <h2>Login</h2>
     <?php
-    // Hata mesajını göster (varsa)
-    if (isset($_SESSION["error"])) {
-        echo "<p style='color: red'>" . $_SESSION["error"] . "</p>";
-        unset($_SESSION["error"]);
+    // Hata mesajını göster
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (empty($_POST["username"]) || empty($_POST["password"])) {
+            echo "<p style='color:red'>Kullanıcı adı ve şifre alanları boş bırakılamaz!</p>";
+        } elseif (!filter_var($_POST["username"], FILTER_VALIDATE_EMAIL)) {
+            echo "<p style='color:red'>Geçerli bir mail adresi girmelisiniz!</p>";
+        } elseif (strpos($_POST["username"], '@sakarya.edu.tr') === false) {
+            echo "<p style='color:red'>Kullanıcı adı @sakarya.edu.tr içermelidir!</p>";
+        } else {
+            echo "<p style='color:red'>Kullanıcı adı veya şifre yanlış!</p>";
+        }
     }
     ?>
     <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
         <label for="username">Kullanıcı Adı:</label>
-        <input type="text" id="username" name="username" required><br>
-
+        <input type="text" name="username" required><br><br>
         <label for="password">Şifre:</label>
-        <input type="password" id="password" name="password" required><br>
-
-        <input type="submit" value="Giriş Yap">
+        <input type="password" name="password" required><br><br>
+        <input type="submit" value="Giriş">
     </form>
 </body>
 </html>
