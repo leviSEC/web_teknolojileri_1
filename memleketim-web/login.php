@@ -44,8 +44,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 <head>
     <title>Login Sayfası</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="login-container">
     <h2>Login</h2>
     <?php
     // Hata mesajını göster
@@ -68,5 +70,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="password" name="password" required><br><br>
         <input type="submit" value="Giriş">
     </form>
+    </div>
 </body>
 </html>
