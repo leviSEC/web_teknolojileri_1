@@ -53,41 +53,92 @@ footer {
 }
 
 /* Hakkında Sayfası Stilleri */
-#about h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
+#about {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
-#about h3 {
-  font-size: 18px;
+h1 {
+  color: #ffffff;
+}
+
+h2 {
+  color: #070707;
+  margin-top: 20px;
+}
+
+h3 {
+  color: #000000;
+}
+
+ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+li {
   margin-bottom: 5px;
 }
 
-#about ul {
-  margin-left: 20px;
+.link-box a {
+  display: block;
+  margin-bottom: 5px;
 }
 
-#about li {
+.game-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.game-item {
+  flex: 0 0 33.33%;
+  padding: 10px;
+  text-align: center;
+}
+
+.game-item img {
+  width: 100%;
+  max-height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
   margin-bottom: 5px;
+}
+
+.game-item span {
+  display: block;
+  color: #000;
 }
 
 /* Özgeçmiş Sayfası Stilleri */
-#cv h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
+#cv {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
-#cv h3 {
-  font-size: 18px;
-  margin-bottom: 5px;
+h2 {
+  color: #000000;
 }
 
-#cv ul {
-  margin-left: 20px;
+article {
+  margin-bottom: 20px;
 }
 
-#cv li {
-  margin-bottom: 5px;
+h3 {
+  color: #000000;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #000000;
+  margin: 20px 0;
 }
 
 /* Şehir Sayfası Stilleri */
@@ -146,43 +197,23 @@ footer {
 }
 
 /* Takımımız Sayfası Stilleri */
-#team h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-#team p {
-  margin-bottom: 10px;
-}
-
-.team-members {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.member {
+.team-info {
   text-align: center;
-  margin: 0 10px;
 }
 
-.member img {
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 50%;
+.team-info img {
+  max-width: 200px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.team-details h2 {
   margin-bottom: 10px;
 }
 
-.member h3 {
-  font-size: 18px;
-  margin-bottom: 5px;
+.team-details p {
+  margin-bottom: 20px;
 }
-
-.member p {
-  margin-bottom: 10px;
-}
-
 /* Küçük Ekranlar */
 @media (max-width: 767px) {
   body {
