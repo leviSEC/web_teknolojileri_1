@@ -1,6 +1,6 @@
 const apiKey = "09cf7cf947565beeaa4d7f1791ba2dc3";
 // İlgi alanlarınızı belirleyin (örneğin film türleri)
-const interests = ["Aksiyon", "Komedi", "Bilim Kurgu"];
+const interests = ["Aksiyon"];
 
 // TMDB API'den film verilerini almak için istek yapın
 function getMovies() {
@@ -16,8 +16,7 @@ function getMovies() {
       const interestsContainer = document.getElementById("interests-container");
 
       results.forEach((result, index) => {
-        const interestMovies = result.results.slice(0, 5);
-
+        const interestMovies = result.results.slice(0, 15);
         const interestElement = document.createElement("div");
         interestElement.classList.add("interest");
 
