@@ -64,6 +64,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
     ?>
+    <div> 
+        <p> Osman</p>
+    </div>
     <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
         <label for="username">Kullanıcı Adı:</label>
         <input type="text" name="username" required><br><br>
