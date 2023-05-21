@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html lang="tr">
   <head>
+    <meta charset="UTF-8" />
     <title>İletişim Formu</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     />
     <style>
+      body {
+        background-color: #c0c0c0;
+      }
       body {
         font-family: Arial, sans-serif;
         padding: 20px;
@@ -61,7 +67,7 @@
   </head>
   <body>
     <div id="app" class="container">
-      <h1>İletişim Formu</h1>
+      <h2>İletişim Formu</h2>
       <form @submit.prevent="submitForm" action="goster.php" method="post">
         <div class="form-group">
           <label for="name">Ad:</label>

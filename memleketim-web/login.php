@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "<p style='color:red'>Kullanıcı adı ve şifre alanları boş bırakılamaz!</p>";
         } elseif (!filter_var($_POST["username"], FILTER_VALIDATE_EMAIL)) {
             echo "<p style='color:red'>Geçerli bir mail adresi girmelisiniz!</p>";
-        } elseif (strpos($_POST["username"], '@sakarya.edu.tr') === false) {
+        } elseif (substr($_POST["username"], -16) !== '@sakarya.edu.tr') {
             echo "<p style='color:red'>Kullanıcı adı @sakarya.edu.tr içermelidir!</p>";
         } else {
             echo "<p style='color:red'>Kullanıcı adı veya şifre yanlış!</p>";
