@@ -2,7 +2,7 @@
 <p> 2022-2023 BAHAR DÖNEMİ WEB TEKNOLOJİLERİ DERSİ PROJE ÖDEVİ </p> </br>
 G221210370 - Ömer Faruk Aydın </br> </br>
 <b>İLK WEBSİTEM </b> </br></br>
-<b> Proje Amacı </b> </br>
+<b> Proje Amacı </b> </br></br>
 Derste öğrenilen bilgiler (HTML, CSS, Javascript vb.) kullanılarak bir web sitesi geliştirilmesi.
 
 <b> Proje Detayları </b> </br>
