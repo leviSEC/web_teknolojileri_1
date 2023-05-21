@@ -11,6 +11,11 @@ function login($username, $password) {
         return false;
     }
 
+    // Kullanıcı adını kontrol et
+    if (!strpos($username, '@sakarya.edu.tr')) {
+        return false;
+    }
+
     // Kullanıcı adından öğrenci numarasını çıkar
     $studentNumber = explode('@', $username)[0];
 
@@ -32,10 +37,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (login($username, $password)) {
         // Başarılı login mesajını göster
         echo "Hoşgeldiniz " . htmlspecialchars($username) . "! Login işlemi başarılı.";
+        exit(); // İşlem başarılı olduğunda scriptin devam etmesini engellemek için exit() fonksiyonunu kullanıyoruz.
     } else {
-        // Başarısız login durumunda kullanıcıyı login sayfasına yönlendir
-        header("Location: login.php");
-        exit();
+        // Başarısız login durumunda hata mesajı göster ve kullanıcıyı login sayfasına yönlendir
+        $errorMessage = "Kullanıcı adı veya şifre yanlış!";
+        if (!filter_var($username, FILTER_VALIDATE_EMAIL)) {
+            $errorMessage = "Geçerli bir mail adresi girmelisiniz!";
+        }
+        echo "<p style='color:red'>$errorMessage</p>";
     }
 }
 ?>
@@ -45,32 +54,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <title>Login Sayfası</title>
     <link rel="stylesheet" href="style.css">
-    
 </head>
 <body>
     <div class="login-container">
-    <h2>Login</h2>
-    <?php
-    // Hata mesajını göster
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        if (empty($_POST["username"]) || empty($_POST["password"])) {
-            echo "<p style='color:red'>Kullanıcı adı ve şifre alanları boş bırakılamaz!</p>";
-        } elseif (!filter_var($_POST["username"], FILTER_VALIDATE_EMAIL)) {
-            echo "<p style='color:red'>Geçerli bir mail adresi girmelisiniz!</p>";
-        } elseif (substr($_POST["username"], -16) !== '@sakarya.edu.tr') {
-            echo "<p style='color:red'>Kullanıcı adı @sakarya.edu.tr içermelidir!</p>";
-        } else {
-            echo "<p style='color:red'>Kullanıcı adı veya şifre yanlış!</p>";
+        <h2>Login</h2>
+        <?php
+        // Hata mesajını göster
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (empty($_POST["username"]) || empty($_POST["password"])) {
+                echo "<p style='color:red'>Kullanıcı adı ve şifre alanları boş bırakılamaz!</p>";
+            }
         }
-    }
-    ?>
-    <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
-        <label for="username">Kullanıcı Adı:</label>
-        <input type="text" name="username" required><br><br>
-        <label for="password">Şifre:</label>
-        <input type="password" name="password" required><br><br>
-        <input type="submit" value="Giriş">
-    </form>
+        ?>
+        <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
+            <label for="username">Kullanıcı Adı:</label>
+            <input type="text" name="username" required><br><br>
+            <label for="password">Şifre:</label>
+            <input type="password" name="password" required><br><br>
+            <input type="submit" value="Giriş">
+        </form>
     </div>
 </body>
 </html>
