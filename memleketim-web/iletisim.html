@@ -1,39 +1,272 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>İletişim</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>İletişim Formu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+      }
+
+      .form-buttons {
+        text-align: right;
+      }
+
+      .form-buttons button {
+        margin-left: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 4px;
+        border: none;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+      }
+
+      .form-buttons button[type="submit"] {
+        background-color: #28a745;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   </head>
-
   <body>
-    <header>
-      <h1>İletişim</h1>
-    </header>
+    <div id="app" class="container">
+      <h1>İletişim Formu</h1>
+      <form @submit.prevent="submitForm" action="goster.php" method="post">
+        <div class="form-group">
+          <label for="name">Ad:</label>
+          <input type="text" id="name" v-model="formData.name" required />
+        </div>
 
-    <main>
-      <form id="contactForm">
-        <div>
-          <label for="name">İsim:</label>
-          <input type="text" id="name" name="name" required />
-        </div>
-        <div>
+        <div class="form-group">
           <label for="email">E-posta:</label>
-          <input type="email" id="email" name="email" required />
+          <input type="email" id="email" v-model="formData.email" required />
         </div>
-        <div>
+
+        <div class="form-group">
+          <label for="phone">Telefon:</label>
+          <input type="tel" id="phone" v-model="formData.phone" />
+        </div>
+
+        <div class="form-group">
+          <label>Cinsiyet:</label>
+          <div class="radio-buttons">
+            <label>
+              <input type="radio" v-model="formData.gender" value="Erkek" />
+              Erkek
+            </label>
+            <label>
+              <input type="radio" v-model="formData.gender" value="Kadın" />
+              Kadın
+            </label>
+            <label>
+              <input type="radio" v-model="formData.gender" value="Diğer" />
+              Diğer
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="age">Yaş:</label>
+          <input type="number" id="age" v-model="formData.age" />
+        </div>
+
+        <div class="form-group">
+          <label for="occupation">Meslek:</label>
+          <input type="text" id="occupation" v-model="formData.occupation" />
+        </div>
+
+        <div class="form-group">
+          <label>İletişim Kanalı:</label>
+          <div class="checkboxes">
+            <label>
+              <input
+                type="checkbox"
+                v-model="formData.communicationChannels"
+                value="E-posta"
+              />
+              E-posta
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                v-model="formData.communicationChannels"
+                value="Telefon"
+              />
+              Telefon
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                v-model="formData.communicationChannels"
+                value="Posta"
+              />
+              Posta
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="subject">Konu:</label>
+          <select id="subject" v-model="formData.subject" required>
+            <option value="" disabled selected>Konu Seçin</option>
+            <option value="Destek">Destek</option>
+            <option value="İşbirliği">İşbirliği</option>
+            <option value="Diğer">Diğer</option>
+          </select>
+        </div>
+
+        <div class="form-group">
           <label for="message">Mesaj:</label>
-          <textarea id="message" name="message" rows="5" required></textarea>
+          <textarea id="message" v-model="formData.message" required></textarea>
         </div>
-        <div>
+
+        <div class="form-group">
+          <label for="file">Dosya Yükle:</label>
+          <input type="file" id="file" v-model="formData.file" />
+        </div>
+
+        <div class="form-group">
+          <label for="date">Tarih:</label>
+          <input type="date" id="date" v-model="formData.date" />
+        </div>
+
+        <div class="form-group">
+          <label for="country">Ülke:</label>
+          <select id="country" v-model="formData.country">
+            <option value="" disabled selected>Ülke Seçin</option>
+            <option value="TR">Türkiye</option>
+            <option value="US">Amerika Birleşik Devletleri</option>
+            <option value="GB">Birleşik Krallık</option>
+            <option value="DE">Almanya</option>
+            <!-- Diğer ülkeleri buraya ekleyebilirsiniz -->
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Diller:</label>
+          <div class="checkboxes">
+            <label>
+              <input
+                type="checkbox"
+                v-model="formData.languages"
+                value="İngilizce"
+              />
+              İngilizce
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                v-model="formData.languages"
+                value="Fransızca"
+              />
+              Fransızca
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                v-model="formData.languages"
+                value="Almanca"
+              />
+              Almanca
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                v-model="formData.languages"
+                value="İspanyolca"
+              />
+              İspanyolca
+            </label>
+            <!-- Diğer dilleri buraya ekleyebilirsiniz -->
+          </div>
+        </div>
+
+        <div class="form-buttons">
           <button type="button" @click="clearForm">Temizle</button>
-          <button type="button" @click="validateForm">Gönder</button>
+          <button type="submit">Gönder</button>
         </div>
       </form>
-    </main>
+    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
-    <script src="script.js"></script>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          formData: {
+            name: "",
+            email: "",
+            phone: "",
+            gender: "",
+            age: null,
+            occupation: "",
+            communicationChannels: [],
+            subject: "",
+            message: "",
+            file: null,
+            date: null,
+            country: "",
+            languages: [],
+          },
+        },
+        methods: {
+          submitForm() {
+            // Form gönderme işlemleri burada yapılabilir
+            // this.formData objesi, gönderilmek istenen verileri içerir
+
+            // Örneğin, formun içeriğini konsola yazdırabiliriz
+            console.log(this.formData);
+          },
+          clearForm() {
+            // Formu temizleme işlemi burada yapılır
+            this.formData = {
+              name: "",
+              email: "",
+              phone: "",
+              gender: "",
+              age: null,
+              occupation: "",
+              communicationChannels: [],
+              subject: "",
+              message: "",
+              file: null,
+              date: null,
+              country: "",
+              languages: [],
+            };
+          },
+        },
+      });
+    </script>
   </body>
 </html>
